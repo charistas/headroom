@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 256" role="img" aria-labelledby="title">
+  <title id="title">Headroom — Balanced hammock</title>
+  <path d="M36.0,66.0 C79.0,118.0 149.0,170.0 215.0,153.0 C243.0,130.0 267.0,98.0 284.0,66.0 C276.0,152.0 251.0,218.0 164.0,218.0 C91.0,218.0 54.0,168.0 36.0,66.0 Z" fill="currentColor"/>
+  <circle cx="36.0" cy="66.0" r="12.0" fill="currentColor"/>
+  <circle cx="284.0" cy="66.0" r="12.0" fill="currentColor"/>
+  <circle cx="188.0" cy="124.0" r="24.0" fill="currentColor"/>
+</svg>
