@@ -1,5 +1,7 @@
 # Working on Headroom
 
+`AGENTS.md` is canonical repository guidance; `CLAUDE.md` imports it.
+
 ## Scope and architecture
 
 - Headroom is a native macOS menu-bar app for volume capacity, core Codex allowance and weekly pacing. Keep changes small and focused on that purpose.
@@ -36,7 +38,16 @@
   bash scripts/check.sh
   ```
 
-- Also run `bash scripts/smoke-lifecycle.sh` for changes to process ownership, shutdown, refresh coordination or app lifecycle.
+- On this laptop, run the gate as `~/.codex/apple-toolchain/with-lock.sh bash scripts/check.sh`; the current script and its build helper do not acquire the lock themselves.
+- Also run `bash scripts/smoke-lifecycle.sh` for changes to process ownership, shutdown, refresh coordination or app lifecycle; on this laptop use `~/.codex/apple-toolchain/with-lock.sh bash scripts/smoke-lifecycle.sh`.
 - For UI changes, inspect the native rendered states, including unavailable/error states and menu-bar fit where relevant. Demo previews must have no side effects.
 - Native notification checks are explicit diagnostics with real OS effects; never run them silently as part of routine tests. Do not log out or restart the user's Mac to test login behavior without authorization.
 - Report what passed, what remains unverified, and any blocked command with its first relevant error. Do not equate compilation, synthetic tests or registration status with full real-world acceptance.
+
+## Apple Toolchain Coordination And Cleanup
+
+On this laptop, before Apple builds, tests or heavy indexing, read `~/.codex/apple-toolchain/SIMULATORS.md` and run native macOS/Swift commands through `~/.codex/apple-toolchain/with-lock.sh COMMAND ARGS...`. A repository adapter may acquire the same lock instead; do not nest locks or bypass a missing/incompatible helper. Keep heavy Apple work serial, and report another session's live lock, active build or booted simulator as a blocker. Idle Xcode and non-active system helpers need not be terminated.
+
+Reuse warm build caches. Preserve required failure evidence, shared caches, user data and other sessions' files; remove only safely disposable task-owned scratch. Stop only task-owned background processes before handoff unless asked to retain them, check their state after build work, and report cleanup and retained resources. Never kill unrelated processes or alter another session's simulator. If simulator work is later introduced, use the host's exact-identity supervisor; do not provision devices or use name-based destinations automatically.
+
+On another machine, use its deliberately configured toolchain with equivalent ownership safeguards. All repository behavior, privacy, release and verification rules remain applicable without this private host setup.
